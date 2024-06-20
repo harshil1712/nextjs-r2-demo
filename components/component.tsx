@@ -34,20 +34,12 @@ export function Component() {
           },
           body: JSON.stringify({ filename: uploadedFile.name })
         })
-        console.log('RESPONSE', res)
         if (res.ok) {
           const { url }: { url: string } = await res.json();
-          console.log('RESPONSE URL', url)
-          const formData = new FormData()
-          // Object.entries(fields).forEach(([key, value]) => {
-          //   formData.append(key, value as string)
-          // })
-
-          formData.append('file', uploadedFile)
 
           const uploadRes = await fetch(url, {
             method: 'PUT',
-            body: formData
+            body: uploadedFile,
           })
 
           if (uploadRes.ok) {

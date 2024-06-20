@@ -17,7 +17,6 @@ export async function POST(request: NextRequest) {
                 expiresIn: 600
             }
         )
-        console.log('URL', url)
         return Response.json({ url })
     } catch (error: any) {
         return Response.json({ error: error.message })
