@@ -70,8 +70,10 @@ pages_build_output_dir = ".vercel/output/static"
 
 ######## PREVIEW environment config ########
 
-# [env.preview.vars]
-# API_KEY = "xyz789"
+[env.preview.vars]
+ACCOUNT_ID='a67e14daa5f8dceeb91fe5449ba496eb'
+ACCESS_KEY_ID='0592a467415628ac03e8a10a0af6d564'
+SECRET_ACCESS_KEY='0b7251a05c11d98be9aab501551e5dc1c82942fe75729ec6e90c27efa4b35abe'
 
 # [[env.preview.kv_namespaces]]
 # binding = "MY_KV_NAMESPACE"
