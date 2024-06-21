@@ -1,6 +1,5 @@
 import {
     S3Client,
-    PutObjectCommand
 } from "@aws-sdk/client-s3";
 
 const ACCOUNT_ID = process.env.ACCOUNT_ID as string;

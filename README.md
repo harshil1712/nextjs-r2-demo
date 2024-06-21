@@ -1,17 +1,52 @@
+An example repo demonstrating image uploading to [R2](https://developers.cloudflare.com/r2/).
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`c3`](https://developers.cloudflare.com/pages/get-started/c3).
 
 ## Getting Started
 
-First, run the development server:
+### Clone the repository
+
+Clone the repo on your local machine running the following command:
+
+```bash
+git clone https://github.com/harshil1712/nextjs-r2-demo.git
+```
+
+### Install dependencies
+
+Run the following command to install the required dependencies:
+
+```bash
+npm run install
+```
+
+### Access R2
+
+If you don't have access to R2, purchase it from your Cloudflare Dashboard.
+
+Create a new bucket. Follow the documentation to learn how to [create a new bucket](https://developers.cloudflare.com/r2/get-started/#2-create-a-bucket).
+
+### Get credentials
+
+To access objects from your R2 bucket, you will need the Account ID, Access Key ID, and Secret Access Key. Follow the [steps mentioned in the documentation](https://developers.cloudflare.com/r2/api/s3/tokens/) to generate the required credentials.
+
+### Setup credentials
+
+Rename `.env.copy` to `.env.local`. Paste the credentials you got in the previous step.
+
+### Configure CORS
+
+You will need to configure the CORS policies to be able to access the objects. Use the CORS policy available in the `cors.json` file.
+
+> __Note:__ You might have to update `AllowedOrigins`.
+
+You add this CORS policy to your bucket via the Dashboard. You can find the steps to do that in [the documentation](https://developers.cloudflare.com/r2/buckets/cors/#add-cors-policies-from-the-dashboard).
+
+### Run development server 
+Execute the following command to run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -36,33 +71,3 @@ You can use bindings during development, when previewing locally your applicatio
 - To use bindings in the preview mode you need to add them to the `pages:preview` script accordingly to the `wrangler pages dev` command. For more details see its [documentation](https://developers.cloudflare.com/workers/wrangler/commands/#dev-1) or the [Pages Bindings documentation](https://developers.cloudflare.com/pages/functions/bindings/).
 
 - To use bindings in the deployed application you will need to configure them in the Cloudflare [dashboard](https://dash.cloudflare.com/). For more details see the  [Pages Bindings documentation](https://developers.cloudflare.com/pages/functions/bindings/).
-
-#### KV Example
-
-`c3` has added for you an example showing how you can use a KV binding.
-
-In order to enable the example:
-- Search for javascript/typescript lines containing the following comment:
-  ```ts
-  // KV Example:
-  ```
-  and uncomment the commented lines below it.
-- Do the same in the `wrangler.toml` file, where
-  the comment is:
-  ```
-  # KV Example:
-  ```
-- If you're using TypeScript run the `cf-typegen` script to update the `env.d.ts` file:
-  ```bash
-  npm run cf-typegen
-  # or
-  yarn cf-typegen
-  # or
-  pnpm cf-typegen
-  # or
-  bun cf-typegen
-  ```
-
-After doing this you can run the `dev` or `preview` script and visit the `/api/hello` route to see the example in action.
-
-Finally, if you also want to see the example work in the deployed application make sure to add a `MY_KV_NAMESPACE` binding to your Pages application in its [dashboard kv bindings settings section](https://dash.cloudflare.com/?to=/:account/pages/view/:pages-project/settings/functions#kv_namespace_bindings_section). After having configured it make sure to re-deploy your application.
