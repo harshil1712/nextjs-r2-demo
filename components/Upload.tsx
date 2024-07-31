@@ -47,7 +47,6 @@ export function Upload() {
         );
 
         const result = (await res.json()) as { status: string };
-        console.log(result);
         result.status === "success"
           ? setMessage("File Upload Successful")
           : setMessage("File Upload Failed");
@@ -58,6 +57,46 @@ export function Upload() {
       }
     } else {
       setMessage("Please select a file");
+    }
+  };
+
+  const handlePreSignedUrlSubmit = async (
+    event: FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
+    if (file) {
+      setUploading(true);
+      setMessage("Uploading...");
+      try {
+        // Fetch the Pre-Signed URL
+        const res = await fetch("/api/pre-signed", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ filename: file.name }),
+        });
+        if (res.ok) {
+          const { url }: { url: string } = await res.json();
+          const uploadRes = await fetch(url, {
+            method: "PUT",
+            body: file,
+          });
+          console.log(uploadRes);
+          if (uploadRes.ok) {
+            setMessage("File Upload Successful!");
+          } else {
+            setMessage("File Upload Failed");
+          }
+        } else {
+          setMessage("Pre-Sign URL error");
+        }
+      } catch (error) {
+        console.error(error);
+        setMessage("An error occured");
+      } finally {
+        setUploading(false);
+      }
     }
   };
 
@@ -105,7 +144,10 @@ export function Upload() {
                   text="Workers API"
                   submitHandler={handleWorkerApiSubmit}
                 />
-                {/* <Button text="Pre-signed URL" submitHandler={handleSubmit} /> */}
+                <Button
+                  text="Pre-signed URL"
+                  submitHandler={handlePreSignedUrlSubmit}
+                />
                 {/* <Button text="Temp Credentials" submitHandler={handleSubmit} /> */}
               </div>
             </form>
