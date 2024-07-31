@@ -29,7 +29,7 @@ export function Upload() {
     setMessage("");
   };
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleWorkerApiSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (file) {
       setUploading(true);
@@ -38,14 +38,17 @@ export function Upload() {
       formData.append("file", file);
 
       try {
-        const res = await fetch(`/api/upload?filename=${file.name}`, {
-          method: "PUT",
-          body: formData,
-        });
+        const res = await fetch(
+          `/api/workers-api/upload?filename=${file.name}`,
+          {
+            method: "PUT",
+            body: formData,
+          }
+        );
 
         const result = (await res.json()) as { status: string };
         console.log(result);
-        result.status === "ok"
+        result.status === "success"
           ? setMessage("File Upload Successful")
           : setMessage("File Upload Failed");
       } catch (error) {
@@ -66,7 +69,7 @@ export function Upload() {
             <h1 className="text-2xl font-bold mb-4 dark:text-gray-200">
               Upload Image
             </h1>
-            <form onSubmit={handleSubmit}>
+            <form>
               <div className="flex justify-center items-center h-64 bg-gray-200 dark:bg-gray-700 rounded-lg mb-6">
                 <label
                   className="cursor-pointer flex flex-col items-center justify-center space-y-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
@@ -98,9 +101,12 @@ export function Upload() {
               <p className="dark:text-gray-200">Upload with</p>
               <p className="text-sm dark:text-gray-500">select one</p>
               <div className="flex justify-between">
-                <Button text="Workers API" submitHandler={handleSubmit} />
-                <Button text="Pre-signed URL" submitHandler={handleSubmit} />
-                <Button text="Temp Credentials" submitHandler={handleSubmit} />
+                <Button
+                  text="Workers API"
+                  submitHandler={handleWorkerApiSubmit}
+                />
+                {/* <Button text="Pre-signed URL" submitHandler={handleSubmit} /> */}
+                {/* <Button text="Temp Credentials" submitHandler={handleSubmit} /> */}
               </div>
             </form>
             <div className="mt-2">
