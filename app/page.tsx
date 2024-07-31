@@ -1,7 +1,5 @@
-import { Component } from "@/components/component";
+import { Upload } from "@/components/Upload";
 
 export default function Home() {
-  return (
-    <Component />
-  );
+  return <Upload />;
 }
