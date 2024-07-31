@@ -7,3 +7,14 @@ interface CloudflareEnv {
   ACCOUNT_ID: string;
   IMAGES: R2Bucket;
 }
+
+interface TempCredRes {
+  success: boolean;
+  errors: [];
+  messages: [];
+  result: {
+    accessKeyId: string;
+    secretAccessKey: string;
+    sessionToken: string;
+  };
+}
