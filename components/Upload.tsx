@@ -84,7 +84,7 @@ export function Upload() {
           const uploadRes = await fetch(url, {
             method: "PUT",
             body: file,
-            // headers: newHeaders,
+            headers: newHeaders,
           });
           if (uploadRes.ok) {
             setMessage("File Upload Successful!");
