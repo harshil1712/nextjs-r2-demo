@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
     }
     return new Response(obj.body);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return Response.json({ status: "error" });
   }
 }

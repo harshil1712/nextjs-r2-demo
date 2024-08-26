@@ -21,7 +21,8 @@ const S3 = new S3Client({
 
 // Get Pre-Signed URL for Upload
 export async function POST(request: NextRequest) {
-  const { filename }: { filename: string } = await request.json();
+  const { filename, type }: { filename: string; type: string } =
+    await request.json();
 
   try {
     const url = await getSignedUrl(
@@ -29,11 +30,16 @@ export async function POST(request: NextRequest) {
       new PutObjectCommand({
         Bucket: "BUCKET_NAME",
         Key: filename,
+        Metadata: {
+          userr: "test",
+        },
       }),
       {
         expiresIn: 600,
+        // signableHeaders: new Set(["x-amz-meta-userr"]),
       }
     );
+    console.log(url);
     return Response.json({ url });
   } catch (error: any) {
     return Response.json({ error: error.message });

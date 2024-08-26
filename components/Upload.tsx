@@ -74,15 +74,18 @@ export function Upload() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ filename: file.name }),
+          body: JSON.stringify({ filename: file.name, type: file.type }),
         });
         if (res.ok) {
           const { url }: { url: string } = await res.json();
+          const newHeaders = {
+            "x-amz-meta-userr": "test",
+          };
           const uploadRes = await fetch(url, {
             method: "PUT",
             body: file,
+            // headers: newHeaders,
           });
-          console.log(uploadRes);
           if (uploadRes.ok) {
             setMessage("File Upload Successful!");
           } else {

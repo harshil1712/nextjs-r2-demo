@@ -9,11 +9,13 @@ export async function PUT(request: NextRequest) {
   const formData = await request.formData();
   const file = formData.get("file");
   try {
-    const res = await getRequestContext().env.IMAGES.put(fileName, file);
-    console.log(res);
+    const res = await getRequestContext().env.IMAGES.put(fileName, file, {
+      // Add Custom MetaData
+      customMetadata: { test: "test" },
+    });
     return Response.json({ status: "success" });
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return Response.json({ status: "error" });
   }
 }
